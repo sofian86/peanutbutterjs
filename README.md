@@ -1,2 +1,2 @@
-peanutbutterjs
+PeanutButter.js
 ==============
