@@ -46,7 +46,7 @@ module.exports = function (grunt) {
 				},
 			},
 			handlebars: {
-				files: ['<%= build.app %>/scripts/app/rawTemplates/**/*.hbs'],
+				files: ['<%= build.app %>/scripts/templates/**/*.hbs'],
 				tasks: ['handlebars:app'],
 				options: {
 					livereload: false,
@@ -137,9 +137,9 @@ module.exports = function (grunt) {
 				},
 				files: [{
 					expand: true,
-					cwd: '<%= build.app %>/scripts/app/rawTemplates/',
+					cwd: '<%= build.app %>/scripts/templates/',
 					src: ['**/*.hbs'],
-					dest: '.tmp/scripts/app/templates',
+					dest: '.tmp/scripts/templates',
 					ext: '.js',
 				}],
 			},
