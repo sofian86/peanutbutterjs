@@ -116,12 +116,12 @@ module.exports = function (grunt) {
 			dist: {
 				options: {
 					generatedImagesDir: '<%= build.dist %>/<%= build.app %>/images'
-				}
+				},
 			},
 			server: {
 				options: {
 					debugInfo: true,
-				}
+				},
 			}
 		},
 		handlebars: {
@@ -223,6 +223,15 @@ module.exports = function (grunt) {
 				'routes/**/*.js',
 				'modules/**/*.js'
 			]
+		},
+		scsslint:{
+			allFiles: [
+				'<%= build.app %>/styles/**/*.scss'
+			],
+			options: {
+				config: '.scss-lint.yml',
+				reporterOutput: null
+			},
 		},
 		rev: {
 			dist: {
@@ -385,6 +394,7 @@ module.exports = function (grunt) {
 			server: [
 				// 'coffee:dist',
 				'jshint',
+				'scsslint',
 				'compass:server',
 				'copy:styles',
 				'handlebars:app',
@@ -396,6 +406,8 @@ module.exports = function (grunt) {
 			// ],
 			dist: [
 				// 'coffee',
+				'jshint',
+				'scsslint',
 				'handlebars:app',
 				'copy:styles',
 				'compass:dist',

@@ -152,6 +152,13 @@ In a terminal window, navigate to your local repository root folder, Where `Grun
 `grunt install`  
 which will install all the neccesary bower (http://bower.io) and npm packages to build and develop with. 
 
+*scsslint*
+To run scsslint task you need to also run one additional task. In the project root folder run the following command in a terminal window.
+```bash
+$ gem update --system && gem install scss-lint
+```
+This should install the scss-lint app. If you run into issues with permissions, try running the commands as super user aka `sudo`
+
 Now your ready to develop or deploy!
 
 Development
