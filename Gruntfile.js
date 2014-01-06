@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 			},
 			compass: {
 				files: ['<%= build.app %>/styles/**/*.{scss,sass}'],
-				tasks: ['compass:server'],
+				tasks: ['scsslint','compass:server'],
 				options: {
 					livereload: false,
 				},
@@ -53,7 +53,8 @@ module.exports = function (grunt) {
 				}
 			},
 			scripts: {
-				files: ['{.tmp,<%= build.app %>}/scripts/**/*.js']
+				files: ['{.tmp,<%= build.app %>}/scripts/**/*.js'],
+				tasks:['jshint']
 			},
 			css: {
 				files: ['{.tmp,<%= build.app %>}/styles/**/*.css']
