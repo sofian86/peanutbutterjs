@@ -10,7 +10,8 @@
     "lodash": "~2.4.1",
     "has": "*",
     "handlebars": "~1.3.0",
-    "sass-bootstrap": "~3.0.2"
+    "sass-bootstrap": "~3.0.2",
+    "bootswatch-scss": "~3.0.0"
   },
   "devDependencies": {}
 }
