@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
 	// show elapsed time at the end
 	require('time-grunt')(grunt);
@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 			},
 			compass: {
 				files: ['<%= build.app %>/styles/**/*.{scss,sass}'],
-				tasks: ['scsslint','compass:server'],
+				tasks: ['scsslint', 'compass:server'],
 				options: {
 					livereload: false,
 				},
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
 			},
 			scripts: {
 				files: ['{.tmp,<%= build.app %>}/scripts/**/*.js'],
-				tasks:['jshint']
+				tasks: ['jshint']
 			},
 			css: {
 				files: ['{.tmp,<%= build.app %>}/styles/**/*.css']
@@ -78,8 +78,8 @@ module.exports = function (grunt) {
 			compassSprites: {
 				files: [{
 					src: [
-						'<%= build.dist %>/<%= build.app %>/images/sprites/*',
-						'!<%= build.dist %>/<%= build.app %>/images/sprites/*.*',
+						'<%= build.dist %>/assets/images/sprites/*',
+						'!<%= build.dist %>/assets/images/sprites/*.*',
 					],
 				}],
 			},
@@ -87,8 +87,8 @@ module.exports = function (grunt) {
 		compass: {
 			options: {
 				sassDir: '<%= build.app %>/styles',
-				cssDir: '.tmp/styles',
 				imagesDir: '<%= build.app %>/images',
+				cssDir: '.tmp/assets/styles',
 				generatedImagesDir: '.tmp/images',
 				fontsDir: '<%= build.app %>/styles/fonts',
 				javascriptDir: '<%= build.app %>/scripts',
@@ -116,7 +116,7 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				options: {
-					generatedImagesDir: '<%= build.dist %>/<%= build.app %>/images'
+					generatedImagesDir: '<%= build.dist %>/assets/images'
 				},
 			},
 			server: {
@@ -130,7 +130,7 @@ module.exports = function (grunt) {
 				options: {
 					namespace: false,
 					amd: true,
-					processContent: function (content) {
+					processContent: function(content) {
 						content = content.replace(/^[\x20\t]+/mg, '').replace(/[\x20\t]+$/mg, '');
 						content = content.replace(/^[\r\n]+/, '').replace(/[\r\n]*$/, '\n');
 						return content;
@@ -147,26 +147,32 @@ module.exports = function (grunt) {
 		},
 		modernizr: {
 			devFile: '<%= build.app %>/bower_components/modernizr/modernizr.js',
-			outputFile: '<%= build.dist %>/<%= build.app %>/scripts/vendor/modernizr.js',
+			outputFile: '<%= build.dist %>/assets/scripts/vendor/modernizr.js',
 			files: [
-				'<%= build.dist %>/<%= build.app %>/scripts/{,*/}*.js',
-				'<%= build.dist %>/<%= build.app %>/styles/{,*/}*.css',
-				'!<%= build.dist %>/<%= build.app %>/scripts/vendor/*'
+				'<%= build.dist %>/assets/scripts/{,*/}*.js',
+				'<%= build.dist %>/assets/styles/{,*/}*.css',
+				'!<%= build.dist %>/assets/scripts/vendor/*'
 			],
+			'extra': {
+				'shiv': true,
+				'printshiv': false,
+				'load': true,
+				'mq': false,
+				'cssclasses': true
+			},
+			'extensibility': {
+				'addtest': false,
+				'prefixed': false,
+				'teststyles': false,
+				'testprops': false,
+				'testallprops': false,
+				'hasevents': false,
+				'prefixes': false,
+				'domprefixes': false
+			},
 			uglify: true
 		},
 		bower: {
-			install: {
-				options: {
-					targetDir: '<%= build.app %>/bower_components',
-					layout: 'byComponent',
-					install: true,
-					verbose: false,
-					cleanTargetDir: false,
-					cleanBowerDir: false,
-					bowerOptions: {}
-				}
-			},
 			options: {
 				exclude: ['modernizr'],
 			},
@@ -175,28 +181,12 @@ module.exports = function (grunt) {
 			}
 		},
 		requirejs: {
-			all: {
-				options: {
-					baseUrl: 'app/scripts',
-					name: 'main',
-					mainConfigFile: 'app/scripts/config.js',
-					//uglify2: {} // https://github.com/mishoo/UglifyJS2
-					optimize: 'uglify2',
-					// TODO: Figure out how to make sourcemaps work with grunt-usemin
-					// https://github.com/yeoman/grunt-usemin/issues/30
-					generateSourceMaps: true,
-					// required to support SourceMaps
-					// http://requirejs.org/docs/errors.html#sourcemapcomments
-					preserveLicenseComments: false,
-					useStrict: true,
-					wrap: true,
-				}
-			},
 			app: {
 				options: {
-					baseUrl: 'app/scripts',
+					baseUrl: '<%= build.app %>/scripts',
 					name: 'main',
-					mainConfigFile: 'app/scripts/config.js',
+					mainConfigFile: '<%= build.app %>/scripts/main.js',
+					out: '<%= build.dist %>/assets/scripts/main.js',
 					//uglify2: {} // https://github.com/mishoo/UglifyJS2
 					optimize: 'uglify2',
 					// TODO: Figure out how to make sourcemaps work with grunt-usemin
@@ -225,7 +215,7 @@ module.exports = function (grunt) {
 				'modules/**/*.js'
 			]
 		},
-		scsslint:{
+		scsslint: {
 			allFiles: [
 				'<%= build.app %>/styles/**/*.scss'
 			],
@@ -234,31 +224,30 @@ module.exports = function (grunt) {
 				reporterOutput: null
 			},
 		},
-		rev: {
+		filerev: {
 			dist: {
 				files: {
 					src: [
-						'<%= build.dist %>/<%= build.app %>/scripts/**/*.js',
-						'<%= build.dist %>/<%= build.app %>/styles/**/*.css',
-						'<%= build.dist %>/<%= build.app %>/images/**/*.{png,jpg,jpeg,gif,webp}',
-						'<%= build.dist %>/<%= build.app %>/styles/fonts/**/*.*'
+						'<%= build.dist %>/assets/scripts/**/{,*/!(require|modernizr)}*.js',
+						'<%= build.dist %>/assets/styles/**/*.css',
+						'<%= build.dist %>/assets/images/**/*.{png,jpg,jpeg,gif,webp}',
+						'<%= build.dist %>/assets/styles/fonts/**/*.*'
 					]
 				}
 			}
 		},
 		useminPrepare: {
 			options: {
-				dest: '<%= build.dist %>/<%= build.app %>'
+				dest: '<%= build.dist %>/'
 			},
-			html: ['<%= build.app %>/{,*/}*.html', 'views/**/*.jade']
+			html: ['<%= build.app %>/{,*/}*.html', 'views/**/*.hbs']
 		},
 		usemin: {
 			options: {
-				dirs: ['<%= build.dist %>/<%= build.app %>'],
-				basedir: '<%= build.dist %>/<%= build.app %>',
+				assetDirs: ['<%= build.dist %>', '<%= build.dist %>/assets'],
 			},
-			html: ['<%= build.dist %>/<%= build.app %>/{,*/}*.html', '<%= build.dist %>/views/**/*.jade'],
-			css: ['<%= build.dist %>/<%= build.app %>/styles/{,*/}*.css']
+			html: ['<%= build.dist %>/assets/{,*/}*.html', '<%= build.dist %>/views/**/*.handlebars'],
+			css: ['<%= build.dist %>/assets/styles/{,*/}*.css']
 		},
 		imagemin: {
 			dist: {
@@ -266,7 +255,7 @@ module.exports = function (grunt) {
 					expand: true,
 					cwd: '<%= build.app %>/images',
 					src: '**/*.{png,jpg,jpeg}',
-					dest: '<%= build.dist %>/<%= build.app %>/images'
+					dest: '<%= build.dist %>/assets/images'
 				}]
 			}
 		},
@@ -276,7 +265,7 @@ module.exports = function (grunt) {
 					expand: true,
 					cwd: '<%= build.app %>/images',
 					src: '{,*/}*.svg',
-					dest: '<%= build.dist %>/<%= build.app %>/images'
+					dest: '<%= build.dist %>/assets/images'
 				}]
 			}
 		},
@@ -289,7 +278,7 @@ module.exports = function (grunt) {
 			//
 			// dist: {
 			//     files: {
-			//         '<%= build.dist %>/<%= build.app %>/styles/main.css': [
+			//         '<%= build.dist %>/assets/styles/main.css': [
 			//             '.tmp/styles/{,*/}*.css',
 			//             '<%= build.app %>/styles/{,*/}*.css'
 			//         ]
@@ -313,9 +302,25 @@ module.exports = function (grunt) {
 					expand: true,
 					cwd: '<%= build.app %>',
 					src: '*.html',
-					dest: '<%= build.dist %>/<%= build.app %>'
+					dest: '<%= build.dist %>/assets'
 				}]
 			}
+		},
+		'regex-replace': {
+			dist: {
+				src: ['<%= build.dist %>/views/**/*.hbs', '<%= build.dist %>/**/*.html'],
+				actions: [{
+					name: 'modernizrjs',
+					search: '\\/assets\\/bower_components\\/modernizr\\/modernizr\\.js',
+					replace: '/assets/scripts/vendor/modernizr.js',
+					flags: 'g',
+				}, {
+					name: 'requirejs',
+					search: '\\/assets\\/bower_components\\/requirejs\\/require\\.js',
+					replace: '/assets/scripts/vendor/require.js',
+					flags: 'g',
+				}]
+			},
 		},
 		// Put files not handled in other tasks here
 		copy: {
@@ -324,7 +329,7 @@ module.exports = function (grunt) {
 					expand: true,
 					dot: true,
 					cwd: '<%= build.app %>',
-					dest: '<%= build.dist %>/<%= build.app %>',
+					dest: '<%= build.dist %>/assets',
 					src: [
 						'*.{ico,png,txt}',
 						'.htaccess',
@@ -337,14 +342,20 @@ module.exports = function (grunt) {
 					dot: true,
 					cwd: 'views',
 					dest: '<%= build.dist %>/views/',
-					src: '**/*.jade',
+					src: '**/*.hbs',
+				}, {
+					expand: true,
+					dot: true,
+					cwd: '<%= build.app %>/bower_components/requirejs/',
+					dest: '<%= build.dist %>/assets/scripts/vendor/',
+					src: ['require.js']
 				}]
 			},
 			styles: {
 				expand: true,
 				dot: true,
 				cwd: '<%= build.app %>/styles',
-				dest: '.tmp/styles/',
+				dest: '.tmp/assets/styles/',
 				src: '{,*/}*.css'
 			},
 		},
@@ -438,8 +449,8 @@ module.exports = function (grunt) {
 		'uglify',
 		'modernizr',
 		'copy:dist',
-
-		'rev',
+		'regex-replace',
+		'filerev',
 		'usemin',
 
 		// remove sprites folders in dist/images/sprites/
