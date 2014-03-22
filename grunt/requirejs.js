@@ -10,12 +10,14 @@ module.exports = {
   },
   prod: {
     options: {
-      dir: '<%= config.prod.dest %>/js'
+      baseUrl: '<%= config.prod.ui %>/js',
+      dir: '<%= config.prod.assets %>/js'
     }
   },
   dev: {
     options: {
-      dir: '<%= config.dev.dest %>/js',
+      baseUrl: '<%= config.dev.ui %>/js',
+      dir: '<%= config.dev.assets %>/js',
       generateSourceMaps: true
     }
   }

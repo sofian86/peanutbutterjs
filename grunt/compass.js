@@ -1,6 +1,6 @@
 module.exports = {
   options: {
-    sassDir: '<%= config.ui.src %>/scss',
+    sassDir: '<%= config.ui.src %>/styles',
     imagesDir: '<%= config.ui.src %>/img',
     cssDir: '<%= config.prod.dest %>/css',
     generatedImagesDir: '<%= config.prod.dest %>/img',

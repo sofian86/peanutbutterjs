@@ -1,19 +1,22 @@
 module.exports = {
   tmp: '.tmp',
+  bowerSrc: '<%= ui.src %>/bower_components',
   ui: {
-    src: 'ui-src',
-    staging: '<%= config.tmp %>/staging/ui'
-  }
+    src: 'ui',
+  },
   dev: {
-    src:'<%= config.ui.src %>',
-    dest: '<%= config.tmp %>/assets',
+    ui:'<%= config.ui.src %>',
+    dest: '<%= config.tmp %>',
+    assets: '<%= config.dev.dest %>/assets',
   },
   prod: {
-    src:'<%= config.ui.src %>',
-    dest: 'staging/assets',
+    ui:'<%= config.ui.src %>',
+    dest: 'prod',
+    assets: '<%= config.prod.dest %>/assets',
   },
   staging: {
-    src:'<%= config.ui.src %>',
-    dest: 'assets',
+    ui:'<%= config.ui.src %>',
+    dest: 'staging',
+    assets: '<%= config.staging.dest %>/assets',
   }
 };

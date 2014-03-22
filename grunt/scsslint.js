@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
   allFiles: [
     '<%= config.ui.src %>/styles/{,*/}*.scss'
   ],

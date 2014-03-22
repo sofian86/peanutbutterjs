@@ -1,4 +1,4 @@
-modules.export = {
+module.export = {
   clean: {
     prod: {
       files: [{
@@ -9,12 +9,22 @@ modules.export = {
         ],
       }],
     },
+    tmp: ['<%= config.tmp %>'],
     dev: ['<%= config.dev.dest %>'],
+    staging: {
+      files: [{
+        dot: true,
+        src: [
+          '<%= config.staging.dest %>/*',
+          '!<%= config.staging.dest %>/.git'
+        ],
+      }]
+    },
     compassSprites: {
       files: [{
         src: [
-          '<%= build.dist %>/assets/images/sprites/*',
-          '!<%= build.dist %>/assets/images/sprites/*.*',
+          '{<%= config.prod.assets %>,<%= config.staging.assets %>}/img/sprites/*',
+          '!{<%= config.prod.assets %>%>,<%= config.staging.assets %>}/img/sprites/*.*',
         ],
       }],
     },

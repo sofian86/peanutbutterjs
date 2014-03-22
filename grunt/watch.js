@@ -3,27 +3,27 @@ module.export = {
     livereload: true
   },
   compass: {
-    files: ['<%= config.dev.src %>/js/{,*/}.{scss,sass}'],
+  files: ['<%= config.dev.ui %>/styles/{,*/}*.{scss,sass}'],
     tasks: ['scsslint', 'compass:dev'],
     options: {
       livereload: false,
     },
   },
   handlebars: {
-    files: ['<%= config.dev.src %>/js/templates/{,*/}*.hbs'],
+  files: ['<%= config.dev.ui %>/js/templates/{,*/}*.{hbs,handlebars}'],
     tasks: ['handlebars:dev'],
     options: {
       livereload: false,
     }
   },
   scripts: {
-    files: ['{<%= config.dev.dest %>,<%= config.dev.src %>}/js/{,*/}*.js'],
+  files: ['{<%= config.dev.assets %>,<%= config.dev.ui %>}/js/{,*/}*.js'],
     tasks: ['jshint']
   },
   css: {
-    files: ['{<%= config.dev.dest %>,<%= config.dev.src %>}/css/{,*/}*.css']
+  files: ['{<%= config.dev.assets %>,<%= config.dev.ui %>}/styles/{,*/}*.css']
   },
   images: {
-    files: ['<%= config.dev.dest %>/img/{,*/}*.{png,jpg,jpeg,webp,gif}']
+    files: ['<%= config.dev.ui %>/img/{,*/}*.{png,jpg,jpeg,webp,gif}']
   },
 };

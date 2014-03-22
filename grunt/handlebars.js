@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
   options: {
     namespace: false,
     amd: true,
@@ -12,7 +12,7 @@ module.export = {
     files: [{
       expand: true,
       cwd: '<%= config.dev.src %>/js/templates/',
-      src: ['**/*.hbs'],
+      src: ['{,*/}*.{hbs,handlebars}'],
       dest: '<%= config.dev.dest %>/js/templates',
       ext: '.js',
     }],
@@ -21,7 +21,7 @@ module.export = {
     files: [{
       expand: true,
       cwd: '<%= config.prod.src %>/js/templates/',
-      src: ['**/*.hbs'],
+      src: ['{,*/}*.{hbs,handlebars}'],
       dest: '<%= config.prod.dest %>/js/templates',
       ext: '.js',
     }],

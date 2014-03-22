@@ -18,7 +18,8 @@ var exphbs = require('express3-handlebars');
 //Setup the Configurations files
 var config = extend({}, require('./config/default'));
 config.env = app.get('env');
-config = extend(config, require('./config/' + config.env));
+
+config = extend(config, require('./config/'+config.env) || {});
 
 var layoutsDir = 'development' === config.env ? 'views/layouts' : 'dist/views/layouts';
 var partialsDir = 'development' === config.env ? 'views/partials' : 'dist/views/partials';
